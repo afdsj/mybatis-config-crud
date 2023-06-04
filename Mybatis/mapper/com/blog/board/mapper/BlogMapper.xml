@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+  <mapper namespace="com.blog.board.mapper.BlogMapper">
+  
+  	<resultMap id="postMap" type="com.blog.board.dto.PostDTO" >
+  		<id property="id" column="P_NUMBER"/>
+  		<result property="bNumber" column="B_NUMBER"/>
+  		<result property="pTitle" column="P_TITLE"/>
+  		<result property="pDetail" column="P_DETAIL"/>
+  		<result property="cNumber" column="C_NUMBER"/>
+  		<result property="pTime" column="P_TIME"/>
+  		<result property="pSituation" column="P_SITUATION"/>
+  	</resultMap>
+  
+  	<select id="postList" resultMap="postMap">
+  		SELECT
+  				*
+  		  FROM POST
+  	</select>
+  	
+  	<insert id="insertPost" parameterType="com.blog.board.dto.PostDTO">
+  		INSERT INTO POST
+  		(
+	  		P_NUMBER,
+	  		B_NUMBER,
+	  		P_TITLE,
+	  		P_DETAIL,
+	  		P_TIME,
+	  		P_SITUATION,
+	  		C_NUMBER
+	  	)
+	  	VALUES
+	  	(   P_NUMBER.NEXTVAL,
+	  		#{bNumber},
+	  		#{pTitle},
+	  		#{pDetail},
+	  		SYSDATE,
+	  		'Y',
+	  		#{cNumber}
+	  	)
+  	
+  	</insert>
+  	
+  	<update id="updatePost" parameterType="com.blog.board.dto.PostDTO">
+  		UPDATE POST
+  		   SET P_DETAIL = #{pDetail}
+         WHERE P_NUMBER = #{id}
+  	</update>
+  	
+  	<update id="deletePost">
+  		UPDATE POST
+  		   SET P_SITUATION = 'N'
+         WHERE P_NUMBER = #{pNumber}
+  	
+  	</update>
+  </mapper>
